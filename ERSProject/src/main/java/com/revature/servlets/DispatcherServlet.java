@@ -28,8 +28,7 @@ public class DispatcherServlet extends DefaultServlet{
 	
 	// delegates get requests to their controllers
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String actualURL = request.getRequestURI().substring(request.getContextPath().length());
 		
 		if(actualURL.startsWith("/Static")) {
@@ -46,8 +45,7 @@ public class DispatcherServlet extends DefaultServlet{
 	
 	// delegates post requests to their controllers
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String actualURL = request.getRequestURI().substring(request.getContextPath().length());
 		
 		if(actualURL.startsWith("/users/")) {

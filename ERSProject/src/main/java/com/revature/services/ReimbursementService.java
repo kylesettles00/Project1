@@ -26,7 +26,6 @@ public class ReimbursementService {
 	// service used to change the status of a reimbursement,
 	// calls the DAO method approveDeny
 	public boolean statusChange(Reimbursement r, String choice, int resolverId) {
-		System.out.println("in the service for status");
 		return rd.approveDeny(choice, r.getId(), resolverId);
 	}
 

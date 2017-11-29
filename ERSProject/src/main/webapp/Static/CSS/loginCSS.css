@@ -10,8 +10,9 @@
     padding-right:15%;
     padding-bottom: 5%;
 }
-#register {
+.rButton {
     margin-top: 10px;
     background-color: mediumseagreen;
     border-color: mediumseagreen;
+    color: white;
 }

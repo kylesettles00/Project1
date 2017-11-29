@@ -1,7 +1,3 @@
-function showAddReimbursement() {
-    window.location = './addReimbursement.html';
-}
-
 function searchTable() {
     var input, filter, found, table, tr, td, i, j;
     input = document.getElementById("search");

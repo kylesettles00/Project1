@@ -1,7 +1,3 @@
-function showAddReimbursement() {
-    window.location = './addReimbursement.html';
-}
-
 function searchTable() {
     var input, filter, found, table, tr, td, i, j;
     input = document.getElementById("search");
@@ -124,7 +120,6 @@ function submitReimbursement() {
     let xhttp = new XMLHttpRequest();
     xhttp.onload = (resp) => {
         if(xhttp.status === 200){
-            console.log("showing new view");
             alert('Added new reimbursement');
             window.location = './employee-dash.html';
         }
