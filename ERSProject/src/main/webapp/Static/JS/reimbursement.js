@@ -29,6 +29,7 @@ function displayByUser() {
                 let reimbursement = JSON.parse(xhttp.responseText);
                 
                 for (x in reimbursement) {
+                    let status = '';
                     let d = new Date(parseInt(reimbursement[x].submitted));
                     reimbursement[x].submitted = d.toLocaleDateString();
                     
@@ -38,6 +39,7 @@ function displayByUser() {
                     }
                     else {
                         reimbursement[x].resolved = 'Unresolved';
+                        reimbursement[x].resolverId = 'Unresolved';
                     }
                     
                     if(reimbursement[x].status === 1){
@@ -45,9 +47,11 @@ function displayByUser() {
                     }
                     else if(reimbursement[x].status === 2){
                         reimbursement[x].status = 'Approved';
+                        status = 'approved';
                     }
                     else{
                         reimbursement[x].status = 'Denied';
+                        status = 'denied';
                     }
                     
                     if(reimbursement[x].type === 1){
@@ -130,4 +134,19 @@ function submitReimbursement() {
     
     xhttp.open('POST', '../reimbursements/add');
     xhttp.send(JSON.stringify(newReimbursement)); 
+}
+
+function logout() {
+    let xhttp = new XMLHttpRequest();
+    
+    xhttp.onload = (resp) => {
+        if(xhttp.status === 200){
+            window.location = './login.html';
+        }
+        else {
+            alert('failed to logout');
+        }
+    }
+    xhttp.open('GET', '../users/logout');
+    xhttp.send();
 }

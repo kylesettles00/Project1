@@ -20,87 +20,64 @@ function searchTable() {
     }
 }
 
-function showStatusChanger() {
-    if(document.getElementById('statusForm').style.display == 'block'){
-        document.getElementById('statusForm').style.display = 'none';
-    }
-    else{
-        document.getElementById('statusForm').style.display = 'block';
-    }
-}
-
 function getReimbursements() {
     let xhttp = new XMLHttpRequest(); 
     let txt = '';
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                let reimbursement = JSON.parse(xhttp.responseText);
-                txt += "<table border='1'>\
-                            <thead class='thead-dark'>\
-                                <tr>\
-                                    <th>ID</th>\
-                                    <th>Amount</th>\
-                                    <th>Time Submitted</th>\
-                                    <th>Time Resolved</th>\
-                                    <th>Description</th>\
-                                    <th>Author</th>\
-                                    <th>Resolver</th>\
-                                    <th>Status</th>\
-                                    <th>Type</th>\
-                                </tr>\
-                            </thead>\
-                            <tbody>"
-
-                for (x in reimbursement) {
-                    let d = new Date(parseInt(reimbursement[x].submitted));
-                    reimbursement[x].submitted = d.toLocaleDateString();
-                    if(reimbursement[x].resolved != null){
-                        let rd = new Date(parseInt(reimbursement[x].resolved));
-                        reimbursement[x].resolved = rd.toLocaleDateString();
-                    }
-                    else {
-                        reimbursement[x].resolved = 'Unresolved';
-                    }
-                    
-                    if(reimbursement[x].status === 1){
-                        reimbursement[x].status = 'Pending';
-                    }
-                    else if(reimbursement[x].status === 2){
-                        reimbursement[x].status = 'Approved';
-                    }
-                    else{
-                        reimbursement[x].status = 'Denied';
-                    }
-                    
-                    if(reimbursement[x].type === 1){
-                        reimbursement[x].type = 'Lodging';
-                    }
-                    else if(reimbursement[x].type === 2){
-                        reimbursement[x].type = 'Travel';
-                    }
-                     else if(reimbursement[x].type === 3){
-                        reimbursement[x].type = 'Food';
-                    }
-                    else{
-                        reimbursement[x].type = 'Other';
-                    }
-                    
-                    txt += "<tr class= " + status +">";
-                    txt += "<td>" + reimbursement[x].id + "</td>";
-                    txt += "<td>" + "$" + reimbursement[x].amount + "</td>";
-                    txt += "<td>" + reimbursement[x].submitted + "</td>";
-                    txt += "<td>" + reimbursement[x].resolved + "</td>";
-                    txt += "<td>" + reimbursement[x].description + "</td>";
-                    txt += "<td>" + reimbursement[x].authorId + "</td>";
-                    txt += "<td>" + reimbursement[x].resolverId + "</td>";
-                    txt += "<td>" + reimbursement[x].status + "</td>";
-                    txt += "<td>" + reimbursement[x].type + "</td>";
-                    txt += "</tr>";
-                    txt += "</tbody>"
-                    txt += "</table>"  
-                    document.getElementById("table").innerHTML = txt;
+            let reimbursement = JSON.parse(xhttp.responseText);
+            for (x in reimbursement) {
+                let status = '';
+                let d = new Date(parseInt(reimbursement[x].submitted));
+                reimbursement[x].submitted = d.toLocaleDateString();
+                if(reimbursement[x].resolved != null){
+                    let rd = new Date(parseInt(reimbursement[x].resolved));
+                    reimbursement[x].resolved = rd.toLocaleDateString();
                 }
+                else {
+                    reimbursement[x].resolved = 'Unresolved';
+                    reimbursement[x].resolverId = 'Unresolved';
+                }
+
+                if(reimbursement[x].status === 1){
+                    reimbursement[x].status = 'Pending';
+                }
+                else if(reimbursement[x].status === 2){
+                    reimbursement[x].status = 'Approved';
+                    status = 'approved';
+                }
+                else{
+                    reimbursement[x].status = 'Denied';
+                    status = 'denied';
+                }
+
+                if(reimbursement[x].type === 1){
+                    reimbursement[x].type = 'Lodging';
+                }
+                else if(reimbursement[x].type === 2){
+                    reimbursement[x].type = 'Travel';
+                }
+                 else if(reimbursement[x].type === 3){
+                    reimbursement[x].type = 'Food';
+                }
+                else{
+                    reimbursement[x].type = 'Other';
+                }
+
+                txt += "<tr class= " + status +">";
+                txt += "<td>" + reimbursement[x].id + "</td>";
+                txt += "<td>" + "$" + reimbursement[x].amount + "</td>";
+                txt += "<td>" + reimbursement[x].submitted + "</td>";
+                txt += "<td>" + reimbursement[x].resolved + "</td>";
+                txt += "<td>" + reimbursement[x].description + "</td>";
+                txt += "<td>" + reimbursement[x].authorId + "</td>";
+                txt += "<td>" + reimbursement[x].resolverId + "</td>";
+                txt += "<td>" + reimbursement[x].status + "</td>";
+                txt += "<td>" + reimbursement[x].type + "</td>";
+                txt += "</tr>";
+                txt += "</tbody>"
+                txt += "</table>"  
+                document.getElementById("table").innerHTML = txt;
             }
         }
     }
@@ -166,7 +143,7 @@ function approveDeny() {
     if(choice == 'Approve'){
         statusId = 2;
     }
-    else {
+    else if (choice == 'Deny') {
         statusId = 3;
     }
     
@@ -192,4 +169,19 @@ function approveDeny() {
         xhttp.open('POST', '../reimbursements/deny');
         xhttp.send(JSON.stringify(reimbursement));
     }
+}
+
+function logout() {
+    let xhttp = new XMLHttpRequest();
+    
+    xhttp.onload = (resp) => {
+        if(xhttp.status === 200){
+            window.location = './login.html';
+        }
+        else {
+            alert('failed to logout');
+        }
+    }
+    xhttp.open('GET', '../users/logout');
+    xhttp.send();
 }

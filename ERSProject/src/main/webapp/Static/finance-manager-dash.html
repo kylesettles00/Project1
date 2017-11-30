@@ -21,7 +21,7 @@
                         <a class="nav-link" onclick="logout()" href="#">Logout</a>
                     </li>
                 </ul>
-                <div style="float: right">
+                <div id="searchbar">
                     <input id="search" type="text" placeholder="Search" onkeyup="searchTable()" style="float: right">
                 </div>
             </div>
@@ -36,11 +36,11 @@
             <div id="financeActions">
                 <h3>Finance Manager Actions:</h3>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitReimbursement">Submit Reimbursement</button>
-                <button type="button" class="btn btn-primary" onclick="showStatusChanger()">Approve/Deny</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#statuses">Approve/Deny</button>
             </div>
             
             <div>
-                <table class="table table-striped" onload="getReimbursements()">
+                <table class="table" border=1>
                     <thead class='thead-dark'>
                         <tr>
                             <th>ID</th>
@@ -58,8 +58,19 @@
                     </tbody>
                 </table> 
             </div>
-            <div id="statusForm" style="display: none">
-                <form>
+        
+        
+        <div class="modal fade" id="statuses" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Approve/Deny Reimbursement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
                     <label>Reimbursement ID</label>
                     <input type="number" id="reimbId">
                     <div class="form-group col-md-4">
@@ -70,8 +81,13 @@
                             <option>Deny</option>
                         </select>
                     </div>
-                    <button type="button" onclick="approveDeny()">Submit</button>
                 </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="approveDeny()">Submit</button> 
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -124,10 +140,11 @@
             </div>
         </div>
         
+        </div>
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <script src="JS/financeReimbursement.js"></script>
-        <script src="JS/logout.js"></script>
+        <!--<script src="JS/logout.js"></script>-->
     </body>
 </html>
