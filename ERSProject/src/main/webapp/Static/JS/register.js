@@ -1,11 +1,10 @@
 function register() {
-    let username = document.getElementById('username').value;
-    let password = document.getElementById('password').value;
-    let firstname = document.getElementById('firstname').value;
-    let lastname = document.getElementById('lastname').value;
-    let email = document.getElementById('email').value;
-    let role = document.getElementById('role').value;
-    
+    let username = document.getElementById('usernameR').value;
+    let password = document.getElementById('passwordR').value;
+    let firstname = document.getElementById('firstnameR').value;
+    let lastname = document.getElementById('lastnameR').value;
+    let email = document.getElementById('emailR').value;
+    let role = document.getElementById('roleR').value;
     let roleId;
     
     if(role === 'Employee'){
@@ -25,17 +24,15 @@ function register() {
     }
     
     let xhttp = new XMLHttpRequest();
-    
     xhttp.onload = (resp) => {
         if(xhttp.status === 200){
-            console.log("trying to show the window...")
-            window.location = './employee-dash.html';
+            alert('Added user to the system');
+            window.location = './finance-manager-dash.html';
         }
         else{
-            alert('Please try again')
+            alert('Please try again');
         }
     }
     xhttp.open('POST', '../users/register');
-    
     xhttp.send(JSON.stringify(newUser));
 }
