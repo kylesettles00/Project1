@@ -140,10 +140,10 @@ function approveDeny() {
     let reimbId = document.getElementById('reimbId').value;
     
     let statusId;
-    if(choice == 'Approve'){
+    if(choice === 'Approve'){
         statusId = 2;
     }
-    else if (choice == 'Deny') {
+    else if (choice === 'Deny') {
         statusId = 3;
     }
     
@@ -153,8 +153,7 @@ function approveDeny() {
     }
     let xhttp = new XMLHttpRequest();
     xhttp.onload = (resp) => {
-        if(xhttp.status === 200){
-            alert('Reimbursement is ' + choice);
+        if(xhttp.status === 200) {
             window.location = './finance-manager-dash.html';
         }
         else {

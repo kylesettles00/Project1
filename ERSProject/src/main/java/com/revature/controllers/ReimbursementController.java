@@ -123,6 +123,7 @@ public class ReimbursementController {
 			
 			if(success == false) {
 				response.setStatus(401);
+				response.setHeader("error", "manager");
 			}
 		}
 		catch(IOException e) {

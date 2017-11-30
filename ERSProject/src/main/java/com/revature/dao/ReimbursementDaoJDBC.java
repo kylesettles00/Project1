@@ -153,11 +153,11 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 	public boolean approveDeny(String choice, int id, int resolverId) {
 		
 		try(Connection conn = conUtil.getConnection()) {
-			PreparedStatement ps = conn.prepareStatement("UPDATE ers_reimbursement SET reimb_status_id = ?, reimb_resolved = ?, reimb_resolver = ? WHERE reimb_id = ?");
+			PreparedStatement ps = conn.prepareStatement("UPDATE ers_reimbursement SET reimb_status_id = ?, reimb_resolved = ?, reimb_resolver = ? WHERE reimb_id = ? AND reimb_author != " + resolverId);
 			ps.setInt(4, id);
 			
 			if(choice.equals("approve")) {
-				ps.setInt(1, 2);
+				ps.setInt(1, 2); 
 				ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 				ps.setInt(3, resolverId);
 			}
